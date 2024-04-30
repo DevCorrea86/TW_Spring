@@ -42,7 +42,7 @@ public class Job {
     @Enumerated(EnumType.STRING)
     private JobLevel level;
 
-    @Column(nullable = false, precision = 2)
+    @Column(nullable = false, scale = 2)
     private BigDecimal salary;
 
     @ManyToMany
