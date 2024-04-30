@@ -3,9 +3,11 @@ package org.example.tw_spring.api.skills.controllers;
 import lombok.RequiredArgsConstructor;
 import org.example.tw_spring.api.skills.dtos.SkillResponse;
 import org.example.tw_spring.api.skills.mappers.SkillMappers;
+import org.example.tw_spring.core.exceptions.SkillNotFoundException;
 import org.example.tw_spring.core.repositories.SkillRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +28,15 @@ public class SkillController {
                 .stream()
                 .map(skillMappers::toSkillResponse)
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public SkillResponse findById(
+            @PathVariable Long id
+    ){
+        return skillRepository
+                .findById(id)
+                .map(skillMappers::toSkillResponse)
+                .orElseThrow(SkillNotFoundException::new);
     }
 }
